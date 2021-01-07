@@ -1,5 +1,5 @@
 <button (click)="increase()">Increase</button>
-<button (click)="decrease()">Decrease</button>
+<button (click)="decrease()" [disabled]="disableDecrease$ | async">Decrease</button>
 <button (click)="clear()">Clear</button>
 <div>
   <span>Counter: {{ count$ | async }}; Updated at: {{ updatedAt$ | async | date: 'hh:mm:ss' }}</span>

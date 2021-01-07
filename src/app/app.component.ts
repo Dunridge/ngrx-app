@@ -4,6 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {selectCount, selectUpdatedAt} from './reducers/count/count.selectors';
 import {CountClearAction, CountDecreaseAction, CountIncreaseAction} from './reducers/count/count.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import {CountClearAction, CountDecreaseAction, CountIncreaseAction} from './redu
 })
 export class AppComponent {
   public count$: Observable<number> = this.store$.pipe(select(selectCount));
+  public disableDecrease$: Observable<boolean> = this.count$.pipe(map(count => count <= 0));
   public updatedAt$: Observable<number> = this.store$.pipe(select(selectUpdatedAt));
 
   constructor(
