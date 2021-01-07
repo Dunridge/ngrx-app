@@ -7,7 +7,8 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
-import {reducers} from './reducers';
+import {metaReducers, reducers} from './reducers';
+import {AppEffects} from './app.effects';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,17 @@ import {reducers} from './reducers';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot()
+    EffectsModule.forRoot(),
+    // EffectsModule.forRoot([AppEffects]), // effects not working
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
